@@ -1,7 +1,15 @@
 import React from 'react';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 
+
 const Menu = ({ rol }) => {
+    
+
+    const cerrarSecion=()=>{
+        localStorage.clear();
+        
+    }
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -10,12 +18,18 @@ const Menu = ({ rol }) => {
         <Navbar.Collapse id="menu-navbar">
           <Nav className="me-auto">
             {/* Botones comunes a todos los usuarios */}
-            <Nav.Link href="/obras">Obras</Nav.Link>
+            {rol===null &&(<>
+                <Nav.Link href="/inicio">Login</Nav.Link>
             <Nav.Link href="/registro">Registro</Nav.Link>
+            <Nav.Link href="/obras">Obras</Nav.Link>
+            </>)}
+            
+            
 
             {/* Opciones según el rol */}
             {rol === 'usuario' && (
               <>
+              <Nav.Link href="/obras">Obras</Nav.Link>
                 <Nav.Link href="/favoritos">Favoritos</Nav.Link>
                 <Nav.Link href="/pedidos">Pedidos</Nav.Link>
                 <Nav.Link href="/editar-perfil">Editar Perfil</Nav.Link>
@@ -23,9 +37,11 @@ const Menu = ({ rol }) => {
             )}
             {rol === 'artista' && (
               <>
+              <Nav.Link href="/obras">Obras</Nav.Link>
                 <Nav.Link href="/favoritos">Favoritos</Nav.Link>
                 <Nav.Link href="/pedidos">Pedidos</Nav.Link>
-                <Nav.Link href="/gestionar-obras">Gestionar Obras</Nav.Link>
+                <Nav.Link href="/mis-obras">Mis Obras</Nav.Link>
+                <Nav.Link href="/crear-obra">Crear Obra</Nav.Link>
                 <Nav.Link href="/editar-perfil">Editar Perfil</Nav.Link>
               </>
             )}
@@ -40,7 +56,7 @@ const Menu = ({ rol }) => {
 
           {/* Botón de cerrar sesión */}
           {rol && (
-            <Button variant="outline-danger" href="/logout" className="ms-lg-2">
+            <Button variant="outline-danger" href="/" className="ms-lg-2" onClick={cerrarSecion}>
               Cerrar Sesión
             </Button>
           )}

@@ -38,7 +38,7 @@ const Carrusel = () => {
               src={obra.imagen_url}
               alt={obra.titulo}
               className="d-block w-100 obra-imagen"
-              style={{ maxHeight: "400px", objectFit: "cover" }}
+              style={{ maxHeight: "200px", objectFit: "cover" }}
             />
             <Carousel.Caption>
               <h5>{obra.titulo}</h5>
