@@ -32,16 +32,7 @@ const Artista = () => {
   if (!artista) return <p className="text-center mt-4">Artista no encontrado.</p>;
 
   return (
-    <div
-      style={{
-        backgroundImage: "url('/fondo.webp')",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-      }}
-    >
+    <div >
       {/* Navbar */}
       <Menu rol={localStorage.getItem("rol")} />
 

@@ -78,14 +78,7 @@ const Obras = () => {
   return (
 
     <div
-  style={{
-    backgroundImage: "url('/fondo.webp')",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
-    backgroundPosition: "center",
-    minHeight: "100vh", // Asegura que ocupe toda la altura de la pantalla
-  }}
+  
 >
       {/* Navbar */}
       <Menu rol={localStorage.getItem("rol")} />
@@ -183,7 +176,10 @@ const Obras = () => {
                   <strong>Precio:</strong> {obra.precio} € <br />
                   <strong>Cantidad:</strong> {obra.cantidad} 
                 </Card.Text>
-                <BotonFavorito idObra={obra.id_obra} />
+                {(localStorage.getItem("rol") === "artista" || localStorage.getItem("rol") === "usuario") && (
+  <BotonFavorito idObra={obra.id_obra} />
+)}
+
               </Card.Body>
             </Card>
             

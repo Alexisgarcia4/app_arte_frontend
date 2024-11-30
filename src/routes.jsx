@@ -12,6 +12,8 @@ import MisObras from './pages/MisObras';
 import ObraEditable from './pages/ObraEditable';
 import CrearObra from './pages/CrearObras';
 import Favoritos from './pages/Favoritos';
+import PedidoEnTramite from './pages/PedidoEnTramite';
+import Pedidos from './pages/Pedidos';
 
 const AppRoutes = () => {
   return (
@@ -52,6 +54,12 @@ const AppRoutes = () => {
 
         {/* Ruta para el formulario de inicio sesion */}
         <Route path="/inicio" element={<Inicio />} />
+
+        {/* Ruta para lista de pedidos */}
+        <Route path="/pedidos" element={<Pedidos />} />
+
+         {/* Ruta para el pedido en tramite */}
+         <Route path="/pedido-tramite" element={<PedidoEnTramite />} />
       </Routes>
     </Router>
   );

@@ -40,6 +40,8 @@ const Home = () => {
       localStorage.setItem("id_usuario", usuario.id_usuario);
       localStorage.setItem("rol", usuario.rol);
 
+      localStorage.setItem("carrito", "");
+
       navigate('/obras');
 
       // Comprobación
@@ -57,7 +59,7 @@ const Home = () => {
   return (
     <>
       {/* Navbar */}
-      <Menu rol={""} />
+      <Menu rol={localStorage.getItem("rol")} />
 
       {/* Formulario de Login */}
       <Container className="d-flex justify-content-center align-items-center mt-4" style={{ minHeight: "80vh" }}>

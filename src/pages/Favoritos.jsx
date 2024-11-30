@@ -39,24 +39,18 @@ const Favoritos = () => {
 
   return (
     <div
-    style={{
-        backgroundImage: "url('/fondo.webp')",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        backgroundPosition: "center",
-        minHeight: "100vh", // Asegura que ocupe toda la altura de la pantalla
-      }}
+    
     >
       <Menu rol={localStorage.getItem("rol")} />
 
-      <Container className="mt-4">
+      <Container className="mt-4" style={{ minHeight: "80vh" }}>
         <h1 className="text-center mb-4">Mis Favoritos</h1>
 
         {errorMessage ? (
   <h3 className="text-center mb-4 text-danger">{errorMessage}</h3>
 ) : favoritos.length === 0 ? (
-  <h3 className="text-center mb-4">No tiene obras en favoritos</h3>
+    <h3 className="text-center mb-4">No tiene obras en favoritos</h3>
+  
 ) : (
   <Row>
     {favoritos.map((obra) => (

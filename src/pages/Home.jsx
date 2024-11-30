@@ -17,14 +17,7 @@ const Home = () => {
   return (
    
     <div
-  style={{
-    backgroundImage: "url('/fondo.webp')",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
-    backgroundPosition: "center",
-    height: "100vh", // Asegura que ocupe toda la altura de la pantalla
-  }}
+ 
 >
       {/* Navbar */}
       <Menu rol={localStorage.getItem("rol")} />

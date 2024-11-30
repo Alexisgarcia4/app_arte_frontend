@@ -4,44 +4,47 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import axios from "axios";
 import Menu from "../componets/Menu";
 import Footer from "../componets/Footer";
+import BotonFavorito from "../componets/BotonFavorito";
+
+import BotonPedido from "../componets/BotonPedido";
 
 const ObraEspcifica = () => {
   const { id } = useParams(); // Obtener el ID de la obra desde la URL
   const [obra, setObra] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   // Fetch la obra específica desde la API
   useEffect(() => {
     const fetchObra = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/obras/${id}`);
+        const response = await axios.get(
+          `http://localhost:3000/api/obras/${id}`
+        );
         setObra(response.data.obra); // Supone que la API devuelve un objeto obra
         setLoading(false);
       } catch (err) {
-        setError("No se pudo cargar la obra. Por favor, inténtalo de nuevo más tarde.");
+        setError(
+          "No se pudo cargar la obra. Por favor, inténtalo de nuevo más tarde."
+        );
         setLoading(false);
       }
     };
 
     fetchObra();
-  }, [id]);
+  }, [id, updateTrigger]);
 
   if (loading) return <p className="text-center mt-4">Cargando...</p>;
   if (error) return <p className="text-center text-danger mt-4">{error}</p>;
   if (!obra) return <p className="text-center mt-4">Obra no encontrada.</p>;
 
+  const handleUpdate = () => {
+    setUpdateTrigger(!updateTrigger); // Alternar el estado para forzar re-render
+  };
+
   return (
-    <div
-      style={{
-        backgroundImage: "url('/fondo.webp')",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-      }}
-    >
+    <div>
       {/* Navbar */}
       <Menu rol={localStorage.getItem("rol")} />
 
@@ -65,15 +68,21 @@ const ObraEspcifica = () => {
             {/* Columna de los Datos */}
             <Col xs={12} lg={6} className="d-flex align-items-center">
               <Card.Body>
-                <Card.Title className="text-center mb-3">{obra.titulo}</Card.Title>
+                <Card.Title className="text-center mb-3">
+                  {obra.titulo}
+                </Card.Title>
                 <Card.Text>
                   <ul className="list-unstyled">
                     <li>
                       <Link
                         to={`/artista/${obra.id_autor}`}
-                        style={{ textDecoration: "underline", color: "inherit" }}
+                        style={{
+                          textDecoration: "underline",
+                          color: "inherit",
+                        }}
                       >
-                        <strong>Autor:</strong> {obra.Usuario?.nick || "Desconocido"}
+                        <strong>Autor:</strong>{" "}
+                        {obra.Usuario?.nick || "Desconocido"}
                       </Link>
                     </li>
                     <li>
@@ -94,6 +103,19 @@ const ObraEspcifica = () => {
                     </h4>
                   </div>
                 </Card.Text>
+                {(localStorage.getItem("rol") === "artista" ||
+                  localStorage.getItem("rol") === "usuario") && (
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5rem", marginTop: "2rem" }}>
+<BotonFavorito idObra={obra.id_obra} />
+<BotonPedido idObra={obra.id_obra} onUpdate={handleUpdate} />
+                    </div>
+                  
+                )}
+
+                
+                  
+                
+                
               </Card.Body>
             </Col>
           </Row>
@@ -101,7 +123,7 @@ const ObraEspcifica = () => {
       </Container>
 
       {/* Footer */}
-      <Footer/>
+      <Footer />
     </div>
   );
 };
