@@ -42,7 +42,13 @@ const Home = () => {
 
       localStorage.setItem("carrito", "");
 
-      navigate('/obras');
+      if(localStorage.getItem("rol")==="administrador"){
+        navigate('/administrar-pedidos');
+      }else{
+        navigate('/obras');
+      }
+
+     
 
       // Comprobación
       console.log(localStorage.getItem("id_usuario")); // ID del usuario

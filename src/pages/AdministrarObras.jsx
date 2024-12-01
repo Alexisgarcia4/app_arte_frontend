@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
+import Menu from "../componets/Menu";
+import Footer from "../componets/Footer";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import axios from "axios";
-import Menu from "../componets/Menu";
 import { Link } from "react-router-dom";
-import Footer from "../componets/Footer";
 
-const MisObras = () => {
-  const id = localStorage.getItem("id_usuario"); // Obtener ID del usuario desde localStorage
+const AdministrarObras = () => {
   const [obras, setObras] = useState([]);
+  const [artistas, setArtistas] = useState([]);
   const [filters, setFilters] = useState({
+    autor: "",
     precio_min: "",
     precio_max: "",
     titulo: "",
-    estado: "", // Estado de la obra (disponible/no disponible)
+    activo: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -22,23 +23,30 @@ const MisObras = () => {
     try {
       const response = await axios.get("http://localhost:3000/api/obras", {
         params: {
+          activo: filters.activo,
           page,
           limit: 6,
-          id_autor: id, // Solo obras del autor especificado
+          id_autor: filters.autor,
           precio_min: filters.precio_min,
           precio_max: filters.precio_max,
           titulo: filters.titulo,
-          activo: filters.estado, // Filtro por estado
         },
       });
       const { obras, totalPages } = response.data;
       setObras(obras || []);
       setTotalPages(totalPages || 1);
     } catch (error) {
-      console.error(
-        "Error al cargar las obras:",
-        error.response?.data || error.message
-      );
+      console.error("Error al cargar las obras:", error.response?.data || error.message);
+    }
+  };
+
+  // Fetch lista de artistas (autores)
+  const fetchArtistas = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/usuarios?rol=artista");
+      setArtistas(response.data.usuarios || []);
+    } catch (error) {
+      console.error("Error al cargar los artistas:", error.response?.data || error.message);
     }
   };
 
@@ -51,30 +59,35 @@ const MisObras = () => {
   // Filtrar y recargar obras
   const handleFilterSubmit = (e) => {
     e.preventDefault();
-    setCurrentPage(1); // Reiniciar a la primera página
+    setCurrentPage(1);
     fetchObras(1);
   };
 
-  // Cambiar estado de una obra (activar/desactivar)
-  const toggleObraActivo = async (obraId, isActive) => {
-    const url = `http://localhost:3000/api/obras/activo/desactivar/${obraId}`;
+  // Activar obra
+  const activarObra = async (idObra) => {
     try {
-      const response = await axios.put(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log(response.data.message);
-      fetchObras(currentPage); // Refrescar lista de obras
+      await axios.put(`http://localhost:3000/api/obras/activo/activar/${idObra}`, null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      fetchObras(currentPage); // Actualizar lista
     } catch (error) {
-      console.error(
-        "Error al cambiar el estado de la obra:",
-        error.response?.data || error.message
-      );
+      console.error("Error al activar la obra:", error.response?.data || error.message);
+    }
+  };
+
+  // Desactivar obra
+  const desactivarObra = async (idObra) => {
+    try {
+      await axios.put(`http://localhost:3000/api/obras/activo/desactivar/${idObra}`, null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      fetchObras(currentPage); // Actualizar lista
+    } catch (error) {
+      console.error("Error al desactivar la obra:", error.response?.data || error.message);
     }
   };
 
@@ -82,32 +95,34 @@ const MisObras = () => {
     fetchObras(currentPage);
   }, [currentPage]);
 
+  useEffect(() => {
+    fetchArtistas();
+  }, []);
+
   return (
     <div>
-      {/* Navbar */}
       <Menu rol={localStorage.getItem("rol")} />
 
-      <Container className="mt-4">
-        <h1 className="text-center mb-4">Mis Obras</h1>
+      <Container className="mt-4" style={{ minHeight: "80vh" }}>
+        <h1 className="text-center mb-4">Administrar Obras</h1>
 
         {/* Filtros */}
         <Form onSubmit={handleFilterSubmit} className="mb-4">
           <Row>
-            <Col md={3}>
-              <Form.Group controlId="filterEstado">
-                <Form.Label>Estado</Form.Label>
-                <Form.Select
-                  name="estado"
-                  value={filters.estado}
-                  onChange={handleFilterChange}
-                >
+            <Col md={2}>
+              <Form.Group controlId="filterAutor">
+                <Form.Label>Autor</Form.Label>
+                <Form.Select name="autor" value={filters.autor} onChange={handleFilterChange}>
                   <option value="">Todos</option>
-                  <option value="1">Disponible</option>
-                  <option value="0">No Disponible</option>
+                  {artistas.map((artista) => (
+                    <option key={artista.id_usuario} value={artista.id_usuario}>
+                      {artista.nick}
+                    </option>
+                  ))}
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col md={3}>
+            <Col md={2}>
               <Form.Group controlId="filterPrecioMin">
                 <Form.Label>Precio Mínimo</Form.Label>
                 <Form.Control
@@ -119,7 +134,7 @@ const MisObras = () => {
                 />
               </Form.Group>
             </Col>
-            <Col md={3}>
+            <Col md={2}>
               <Form.Group controlId="filterPrecioMax">
                 <Form.Label>Precio Máximo</Form.Label>
                 <Form.Control
@@ -131,7 +146,7 @@ const MisObras = () => {
                 />
               </Form.Group>
             </Col>
-            <Col md={3}>
+            <Col md={2}>
               <Form.Group controlId="filterTitulo">
                 <Form.Label>Título</Form.Label>
                 <Form.Control
@@ -141,6 +156,16 @@ const MisObras = () => {
                   onChange={handleFilterChange}
                   placeholder="Título de la obra"
                 />
+              </Form.Group>
+            </Col>
+            <Col md={2}>
+              <Form.Group controlId="filterActivo">
+                <Form.Label>Activo</Form.Label>
+                <Form.Select name="activo" value={filters.activo} onChange={handleFilterChange}>
+                  <option value="">Todos</option>
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
+                </Form.Select>
               </Form.Group>
             </Col>
           </Row>
@@ -153,56 +178,34 @@ const MisObras = () => {
         <Row>
           {obras.map((obra) => (
             <Col key={obra.id_obra} xs={12} sm={6} lg={4} className="mb-4">
-              <Card
-                className="shadow-sm"
-                style={{
-                  transition: "transform 0.2s", // Suaviza el efecto
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              >
-                {obra.activo ? (
-                  <Link
-                    to={`/obras-editable/${obra.id_obra}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={obra.imagen_url}
-                      style={{ height: "200px", objectFit: "cover" }}
-                    />
-                  </Link>
-                ) : (
+              <Card className="shadow-sm">
+                <Link to={`/obras/${obra.id_obra}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <Card.Img
                     variant="top"
                     src={obra.imagen_url}
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                    }}
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                      }}
                   />
-                )}
-
+                </Link>
                 <Card.Body>
                   <Card.Title>{obra.titulo}</Card.Title>
                   <Card.Text>
+                    <strong>Autor:</strong> {obra.Usuario?.nick || "Desconocido"} <br />
+                    <strong>Precio:</strong> {obra.precio} € <br />
                     <strong>Cantidad:</strong> {obra.cantidad} <br />
-                    <strong>Precio:</strong> {obra.precio} €
+                    <strong>Estado:</strong> {obra.activo ? "Activo" : "Inactivo"} <br />
                   </Card.Text>
-                  {/* Mostrar el botón solo si la obra está activa */}
-                  {obra.activo && (
-                    <Button
-                      variant="danger"
-                      onClick={() =>
-                        toggleObraActivo(obra.id_obra, obra.activo)
-                      }
-                    >
+                  {/* Botones de activar/desactivar */}
+                  {obra.activo ? (
+                    <Button variant="danger" onClick={() => desactivarObra(obra.id_obra)}>
                       Desactivar
+                    </Button>
+                  ) : (
+                    <Button variant="success" onClick={() => activarObra(obra.id_obra)}>
+                      Activar
                     </Button>
                   )}
                 </Card.Body>
@@ -225,9 +228,7 @@ const MisObras = () => {
           </span>
           <Button
             variant="secondary"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
           >
             Siguiente
@@ -235,10 +236,9 @@ const MisObras = () => {
         </div>
       </Container>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
 };
 
-export default MisObras;
+export default AdministrarObras;

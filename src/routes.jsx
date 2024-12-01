@@ -14,10 +14,14 @@ import CrearObra from './pages/CrearObras';
 import Favoritos from './pages/Favoritos';
 import PedidoEnTramite from './pages/PedidoEnTramite';
 import Pedidos from './pages/Pedidos';
+import AdministarPedidos from './pages/AdministarPedidos';
+import AdministarUsuarios from './pages/AdministarUsuarios';
+import AdministrarObras from './pages/AdministrarObras';
 
 const AppRoutes = () => {
   return (
     <Router>
+        
       <Routes>
         {/* Ruta para la página principal */}
         <Route path="/" element={<Home />} />
@@ -57,6 +61,15 @@ const AppRoutes = () => {
 
         {/* Ruta para lista de pedidos */}
         <Route path="/pedidos" element={<Pedidos />} />
+
+        {/* Ruta para administrar pedidos */}
+        <Route path="/administrar-pedidos" element={<AdministarPedidos />} />
+
+        {/* Ruta para administrar usuarios */}
+        <Route path="/administrar-usuarios" element={<AdministarUsuarios />} />
+
+        {/* Ruta para administrar obras */}
+        <Route path="/administrar-obras" element={<AdministrarObras />} />
 
          {/* Ruta para el pedido en tramite */}
          <Route path="/pedido-tramite" element={<PedidoEnTramite />} />

@@ -44,11 +44,12 @@ const Menu = ({ rol }) => {
             )}
             {rol === "administrador" && (
               <>
-                <Nav.Link href="/gestionar-usuarios">
+                <Nav.Link href="/administrar-usuarios">
                   Gestionar Usuarios
                 </Nav.Link>
-                <Nav.Link href="/gestionar-obras">Gestionar Obras</Nav.Link>
-                <Nav.Link href="/completar-pedido">Completar Pedido</Nav.Link>
+                <Nav.Link href="/administrar-obras">Gestionar Obras</Nav.Link>
+                
+                <Nav.Link href="/administrar-pedidos">Completar Pedido</Nav.Link>
               </>
             )}
           </Nav>
@@ -67,9 +68,13 @@ const Menu = ({ rol }) => {
             
           )}
 
-          {/* Botón de tramitar pedido */}
+          {(rol==="usuario"|| rol ==="artista") && (
+            
           <BotonTramitarPedido />
 
+          )}
+
+          
           </div> 
             
         </Navbar.Collapse>

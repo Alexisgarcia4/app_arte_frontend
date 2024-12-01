@@ -103,19 +103,28 @@ const ObraEspcifica = () => {
                     </h4>
                   </div>
                 </Card.Text>
-                {(localStorage.getItem("rol") === "artista" ||
-                  localStorage.getItem("rol") === "usuario") && (
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5rem", marginTop: "2rem" }}>
-<BotonFavorito idObra={obra.id_obra} />
-<BotonPedido idObra={obra.id_obra} onUpdate={handleUpdate} />
-                    </div>
-                  
-                )}
-
-                
-                  
-                
-                
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "5rem",
+                    marginTop: "2rem",
+                  }}
+                >
+                  {(localStorage.getItem("rol") === "artista" ||
+                    localStorage.getItem("rol") === "usuario") && (
+                    <BotonFavorito idObra={obra.id_obra} />
+                  )}
+                  {(localStorage.getItem("rol") === "artista" ||
+                    localStorage.getItem("rol") === "usuario") &&
+                    obra.cantidad > 0 && (
+                      <BotonPedido
+                        idObra={obra.id_obra}
+                        onUpdate={handleUpdate}
+                      />
+                    )}
+                </div>
               </Card.Body>
             </Col>
           </Row>
