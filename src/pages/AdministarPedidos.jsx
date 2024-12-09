@@ -30,7 +30,7 @@ const AdministarPedidos = () => {
       setLoading(true);
       setError("");
 
-      const response = await axios.get("http://localhost:3000/api/pedidos/admin", {
+      const response = await axios.get(`${localStorage.getItem("url")}pedidos/admin`, {
         params: {
           estado: filters.estado,
           dni: filters.dni,
@@ -58,7 +58,7 @@ const AdministarPedidos = () => {
   const completarPedido = async (idPedido) => {
     try {
       await axios.put(
-        `http://localhost:3000/api/pedidos/admin/${idPedido}`,
+        `${localStorage.getItem("url")}admin/${idPedido}`,
         {},
         {
           headers: {
@@ -83,7 +83,7 @@ const AdministarPedidos = () => {
   // Eliminar pedido
   const eliminarPedido = async (idPedido) => {
     try {
-      await axios.delete(`http://localhost:3000/api/pedidos/${idPedido}`, {
+      await axios.delete(`${localStorage.getItem("url")}pedidos/${idPedido}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

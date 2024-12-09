@@ -20,7 +20,7 @@ const ObraEspcifica = () => {
     const fetchObra = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/obras/${id}`
+          `${localStorage.getItem("url")}obras/${id}`
         );
         setObra(response.data.obra); // Supone que la API devuelve un objeto obra
         setLoading(false);

@@ -11,6 +11,8 @@ import Footer from "../componets/Footer";
 
 const Home = () => {
 
+    localStorage.setItem("url","http://localhost:3000/api/");
+
     
 
 

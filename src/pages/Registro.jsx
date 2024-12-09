@@ -98,7 +98,7 @@ const Registro = () => {
 
     try {
       // Enviar el formulario al backend
-      const response = await axios.post("http://localhost:3000/api/usuarios/crear", data, {
+      const response = await axios.post(`${localStorage.getItem("url")}usuarios/crear`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -34,7 +34,7 @@ const BotonFavorito = ({ idObra }) => {
     try {
       if (isFavorite) {
         // Si está en favoritos, eliminarlo
-        await axios.delete(`http://localhost:3000/api/favoritos/${idObra}`, {
+        await axios.delete(`${localStorage.getItem("url")}favoritos/${idObra}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -43,7 +43,7 @@ const BotonFavorito = ({ idObra }) => {
       } else {
         // Si no está en favoritos, añadirlo
         await axios.post(
-          `http://localhost:3000/api/favoritos/${idObra}`,
+          `${localStorage.getItem("url")}favoritos/${idObra}`,
           {},
           {
             headers: {

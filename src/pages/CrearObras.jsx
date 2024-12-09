@@ -50,7 +50,7 @@ const CrearObra = () => {
         data.append("imagen", imagen);
     
         try {
-          const response = await axios.post("http://localhost:3000/api/obras", data, {
+          const response = await axios.post(`${localStorage.getItem("url")}obras`, data, {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${localStorage.getItem("token")}`, // Agregar token

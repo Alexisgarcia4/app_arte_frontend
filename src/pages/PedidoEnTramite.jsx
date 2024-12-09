@@ -27,7 +27,7 @@ const PedidoEnTramite = () => {
 
       const ids = carrito.map((item) => item.id_obra);
 
-      const response = await axios.get("http://localhost:3000/api/obras");
+      const response = await axios.get(`${localStorage.getItem("url")}obras`);
       const todasObras = response.data.obras;
 
       const obrasEnCarrito = todasObras
@@ -98,7 +98,7 @@ const handleConfirmarPedido = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/api/pedidos/crear",
+        `${localStorage.getItem("url")}pedidos/crear`,
         { detalles: nuevoCarrito },
         {
           headers: {

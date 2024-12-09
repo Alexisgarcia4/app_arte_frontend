@@ -15,7 +15,7 @@ const Artista = () => {
   useEffect(() => {
     const fetchArtista = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/usuarios/artista/${id}`);
+        const response = await axios.get(`${localStorage.getItem("url")}usuarios/artista/${id}`);
         setArtista(response.data.artista); // Supone que la API devuelve un objeto `artista`
         setLoading(false);
       } catch (err) {

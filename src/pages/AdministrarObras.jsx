@@ -21,7 +21,7 @@ const AdministrarObras = () => {
   // Fetch obras con filtros y paginación
   const fetchObras = async (page = 1) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/obras", {
+      const response = await axios.get(`${localStorage.getItem("url")}obras`, {
         params: {
           activo: filters.activo,
           page,
@@ -43,7 +43,7 @@ const AdministrarObras = () => {
   // Fetch lista de artistas (autores)
   const fetchArtistas = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/usuarios?rol=artista");
+      const response = await axios.get(`${localStorage.getItem("url")}usuarios?rol=artista`);
       setArtistas(response.data.usuarios || []);
     } catch (error) {
       console.error("Error al cargar los artistas:", error.response?.data || error.message);
@@ -66,7 +66,7 @@ const AdministrarObras = () => {
   // Activar obra
   const activarObra = async (idObra) => {
     try {
-      await axios.put(`http://localhost:3000/api/obras/activo/activar/${idObra}`, null, {
+      await axios.put(`${localStorage.getItem("url")}obras/activo/activar/${idObra}`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -80,7 +80,7 @@ const AdministrarObras = () => {
   // Desactivar obra
   const desactivarObra = async (idObra) => {
     try {
-      await axios.put(`http://localhost:3000/api/obras/activo/desactivar/${idObra}`, null, {
+      await axios.put(`${localStorage.getItem("url")}obras/activo/desactivar/${idObra}`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

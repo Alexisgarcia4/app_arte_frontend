@@ -14,7 +14,7 @@ const Favoritos = () => {
   useEffect(() => {
     const fetchFavoritos = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/favoritos", {
+        const response = await axios.get(`${localStorage.getItem("url")}favoritos`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`, // Incluye el token en la solicitud
           },

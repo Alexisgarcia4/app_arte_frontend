@@ -18,7 +18,7 @@ const Pedidos = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3000/api/pedidos/?estado=${estado}`,
+        `${localStorage.getItem("url")}pedidos/?estado=${estado}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ const Pedidos = () => {
   const cancelarPedido = async (id_pedido) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/pedidos/${id_pedido}`, {
+      await axios.delete(`${localStorage.getItem("url")}pedidos/${id_pedido}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

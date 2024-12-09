@@ -21,7 +21,7 @@ const Obras = () => {
   // Fetch obras con filtros y paginación
   const fetchObras = async (page = 1) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/obras", {
+      const response = await axios.get(`${localStorage.getItem("url")}obras`, {
         params: {
           activo: 1,
           page,
@@ -43,7 +43,7 @@ const Obras = () => {
   // Fetch lista de artistas (autores)
   const fetchArtistas = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/usuarios?rol=artista", {
+      const response = await axios.get(`${localStorage.getItem("url")}usuarios?rol=artista`, {
        
       });
       

@@ -30,7 +30,7 @@ const EditarPerfil = () => {
   useEffect(() => {
     const fetchUsuario = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/usuarios/${id}`, {
+        const response = await axios.get(`${localStorage.getItem("url")}usuarios/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -75,7 +75,7 @@ const EditarPerfil = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:3000/api/usuarios/datos/${id}`,
+        `${localStorage.getItem("url")}usuarios/datos/${id}`,
         formData,
         {
           headers: {
@@ -103,7 +103,7 @@ const EditarPerfil = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/usuarios/imagen/${id}`,
+        `${localStorage.getItem("url")}usuarios/imagen/${id}`,
         data,
         {
           headers: {
@@ -126,7 +126,7 @@ const EditarPerfil = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:3000/api/usuarios/contrasena/${id}`,
+        `${localStorage.getItem("url")}usuarios/contrasena/${id}`,
         passwordData,
         {
           headers: {

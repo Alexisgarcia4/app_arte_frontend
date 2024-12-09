@@ -23,7 +23,7 @@ const ObraEditable = () => {
   useEffect(() => {
     const fetchObra = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/obras/${id}`);
+        const response = await axios.get(`${localStorage.getItem("url")}obras/${id}`);
         const obra = response.data.obra;
         setFormData({
           titulo: obra.titulo,
@@ -61,7 +61,7 @@ const ObraEditable = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:3000/api/obras/datos/${id}`,
+        `${localStorage.getItem("url")}obras/datos/${id}`,
         formData,
         {
           headers: {
@@ -88,7 +88,7 @@ const ObraEditable = () => {
   
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/obras/imagen/${id}`,
+        `${localStorage.getItem("url")}obras/imagen/${id}`,
         data,
         {
           headers: {

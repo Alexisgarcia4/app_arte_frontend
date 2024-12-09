@@ -10,7 +10,7 @@ const Carrusel = () => {
   // Fetch obras desde el backend con Axios
   const fetchObras = async (page = 1) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/obras", {
+      const response = await axios.get(`${localStorage.getItem("url")}obras`, {
         params: {
           random: true, // Solicitar obras aleatorias
           limit: 12, // Ajusta el límite de resultados según tus necesidades

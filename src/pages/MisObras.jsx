@@ -20,7 +20,7 @@ const MisObras = () => {
   // Fetch obras con filtros y paginación
   const fetchObras = async (page = 1) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/obras", {
+      const response = await axios.get(`${localStorage.getItem("url")}obras`, {
         params: {
           page,
           limit: 6,
@@ -57,7 +57,7 @@ const MisObras = () => {
 
   // Cambiar estado de una obra (activar/desactivar)
   const toggleObraActivo = async (obraId, isActive) => {
-    const url = `http://localhost:3000/api/obras/activo/desactivar/${obraId}`;
+    const url = `${localStorage.getItem("url")}obras/activo/desactivar/${obraId}`;
     try {
       const response = await axios.put(
         url,
