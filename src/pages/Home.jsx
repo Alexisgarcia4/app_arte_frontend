@@ -11,7 +11,8 @@ import Footer from "../componets/Footer";
 
 const Home = () => {
 
-    localStorage.setItem("url","http://localhost:3000/api/");
+    //localStorage.setItem("url","http://localhost:3000/api/");
+    localStorage.setItem("url","https://appartebackend-production.up.railway.app/api/");
 
     
 
