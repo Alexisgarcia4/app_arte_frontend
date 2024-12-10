@@ -11,7 +11,7 @@ const BotonFavorito = ({ idObra }) => {
     const verificarFavorito = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/favoritos/${idObra}`,
+          `${localStorage.getItem("url")}favoritos/${idObra}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
