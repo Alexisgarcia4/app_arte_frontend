@@ -1,8 +1,26 @@
-# React + Vite
+# APP_ARTE - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend de la galería de arte en línea **APP_ARTE**.
 
-Currently, two official plugins are available:
+## Tecnologías
+- React, Vite, React Router
+- Bootstrap para estilos
+- Axios para consumo de API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Instalación
+```bash
+git clone https://github.com/usuario/APP_ARTE_FRONTEND.git
+cd APP_ARTE_FRONTEND
+npm install
+npm run dev
+```
+## Características
+
+- Inicio de sesión y registro de usuarios
+- Exploración y compra de obras
+- Gestión de favoritos y pedidos
+- Panel de administración para artistas y administradores
+
+## Autor
+
+Alexis García García
