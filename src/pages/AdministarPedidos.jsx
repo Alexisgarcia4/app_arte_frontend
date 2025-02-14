@@ -58,7 +58,7 @@ const AdministarPedidos = () => {
   const completarPedido = async (idPedido) => {
     try {
       await axios.put(
-        `${localStorage.getItem("url")}admin/${idPedido}`,
+        `${localStorage.getItem("url")}pedidos/admin/${idPedido}`,
         {},
         {
           headers: {
